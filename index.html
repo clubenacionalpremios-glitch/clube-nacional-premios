@@ -248,7 +248,10 @@
     Clube Nacional de Prêmios • Cadastro gratuito • Participação sujeita à validação operacional
   </div>
 
- <script>
+ # Substitua TODO o bloco `<script>` do seu `index.html` por este código
+
+```html
+<script>
   const SUPABASE_URL = "https://frcolkudeiddfddccvmi.supabase.co";
   const SUPABASE_KEY = "sb_publishable_yu4G73-jorUbTivFrSM3Gg_t9UZt31G";
 
@@ -258,18 +261,68 @@
   const form = document.getElementById("formCadastro");
   const mensagem = document.getElementById("mensagem");
 
+  function limparNumeros(valor) {
+    return valor.replace(/\D/g, "");
+  }
+
+  function validarCPF(cpf) {
+    cpf = limparNumeros(cpf);
+
+    if (cpf.length !== 11) return false;
+    if (/^(\d)\1{10}$/.test(cpf)) return false;
+
+    let soma = 0;
+
+    for (let i = 0; i < 9; i++) {
+      soma += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+
+    let resto = (soma * 10) % 11;
+
+    if (resto === 10 || resto === 11) resto = 0;
+
+    if (resto !== parseInt(cpf.charAt(9))) {
+      return false;
+    }
+
+    soma = 0;
+
+    for (let i = 0; i < 10; i++) {
+      soma += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+
+    resto = (soma * 10) % 11;
+
+    if (resto === 10 || resto === 11) resto = 0;
+
+    return resto === parseInt(cpf.charAt(10));
+  }
+
+  function validarWhatsApp(whatsapp) {
+    const numero = limparNumeros(whatsapp);
+    return numero.length === 10 || numero.length === 11;
+  }
+
+  function validarEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
   document.getElementById("cpf").addEventListener("input", function(e) {
     let v = e.target.value.replace(/\D/g, "");
+
     v = v.replace(/(\d{3})(\d)/, "$1.$2");
     v = v.replace(/(\d{3})(\d)/, "$1.$2");
     v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
     e.target.value = v;
   });
 
   document.getElementById("whatsapp").addEventListener("input", function(e) {
     let v = e.target.value.replace(/\D/g, "");
+
     v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
     v = v.replace(/(\d{5})(\d{4})$/, "$1-$2");
+
     e.target.value = v;
   });
 
@@ -277,7 +330,10 @@
     e.preventDefault();
 
     if (!ref) {
-      mostrarMensagem("Link inválido. Solicite um novo link ao seu cambista.", false);
+      mostrarMensagem(
+        "Link inválido. Solicite um novo link ao seu cambista.",
+        false
+      );
       return;
     }
 
@@ -287,6 +343,30 @@
     const email = document.getElementById("email").value.trim();
     const cidade = document.getElementById("cidade").value.trim();
     const estado = document.getElementById("estado").value;
+
+    if (!validarCPF(cpf)) {
+      mostrarMensagem(
+        "CPF inválido. Confira os dados e tente novamente.",
+        false
+      );
+      return;
+    }
+
+    if (!validarWhatsApp(whatsapp)) {
+      mostrarMensagem(
+        "WhatsApp inválido. Informe DDD + número completo.",
+        false
+      );
+      return;
+    }
+
+    if (!validarEmail(email)) {
+      mostrarMensagem(
+        "E-mail inválido. Confira o endereço informado.",
+        false
+      );
+      return;
+    }
 
     const pin = "CNP-" + Math.floor(100000 + Math.random() * 900000);
 
@@ -349,6 +429,7 @@
       form.reset();
 
     } catch (erro) {
+      console.error(erro);
       mostrarMensagem("Erro ao finalizar cadastro.", false);
     }
   });
@@ -359,3 +440,23 @@
     mensagem.style.display = "block";
   }
 </script>
+```
+
+## IMPORTANTE
+
+Troque:
+
+```javascript
+COLE_SUA_PUBLISHABLE_KEY_AQUI
+```
+
+pela sua chave publishable do Supabase.
+
+Depois:
+
+1. Commit changes no GitHub
+2. Aguarde a Vercel atualizar
+3. Teste novamente
+
+⚠️ Não envie sua secret key para ninguém.
+Use apenas a publishable key no frontend.
