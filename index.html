@@ -1,3 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clube Nacional de Prêmios</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #111;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #101010, #2b2b2b);
+      color: white;
+      padding: 48px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin: 0 0 12px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 620px;
+      margin: 0 auto 24px;
+      line-height: 1.5;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #ffd23f;
+      color: #111;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: -30px auto 40px;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    .prize {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .list {
+      padding-left: 18px;
+      line-height: 1.8;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    .check {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      margin-top: 16px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .check input {
+      width: auto;
+      margin-top: 2px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #111;
+      color: white;
+    }
+
+    .msg {
+      display: none;
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 12px;
+      line-height: 1.5;
+    }
+
+    .sucesso {
+      background: #e7f8ec;
+      color: #176b32;
+    }
+
+    .erro {
+      background: #fdeaea;
+      color: #9b1c1c;
+    }
+
+    .footer {
+      text-align: center;
+      color: #666;
+      font-size: 12px;
+      padding: 28px 16px;
+    }
+
+    @media (max-width: 800px) {
+      .container {
+        grid-template-columns: 1fr;
+        margin-top: -20px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section class="hero">
+    <div class="badge">Grande sorteio em 30/08/2026</div>
+    <h1>Concorra a uma Moto Honda 0km</h1>
+    <p>
+      Cadastre-se no Clube Nacional de Prêmios e participe dos sorteios exclusivos.
+      Durante a campanha, também teremos sorteios menores de bancas, freebets e prêmios extras.
+    </p>
+  </section>
+
+  <main class="container">
+    <section class="card">
+      <h2>Como funciona</h2>
+
+      <div class="prize">🏍️ Grande prêmio: Moto Honda de entrada</div>
+
+      <ul class="list">
+        <li>1 cadastro válido = 1 número da sorte</li>
+        <li>Sorteio principal em 30/08/2026</li>
+        <li>Sorteios menores durante a campanha</li>
+        <li>Participação válida apenas para clientes ativos e validados</li>
+        <li>Cadastros inconsistentes ou duplicados podem ser desclassificados</li>
+      </ul>
+
+      <p>
+        Após o cadastro, você receberá seu número da sorte e deverá confirmar seu e-mail
+        para validar sua participação.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Faça seu cadastro</h2>
+
+      <form id="formCadastro">
+        <label>Nome completo</label>
+        <input type="text" id="nome" required />
+
+        <label>CPF</label>
+        <input type="text" id="cpf" required maxlength="14" placeholder="000.000.000-00" />
+
+        <label>WhatsApp</label>
+        <input type="text" id="whatsapp" required maxlength="15" placeholder="(00) 00000-0000" />
+
+        <label>E-mail</label>
+        <input type="email" id="email" required />
+
+        <label>Cidade</label>
+        <input type="text" id="cidade" required />
+
+        <label>Estado</label>
+        <select id="estado" required>
+          <option value="">Selecione</option>
+          <option value="AC">AC</option><option value="AL">AL</option>
+          <option value="AP">AP</option><option value="AM">AM</option>
+          <option value="BA">BA</option><option value="CE">CE</option>
+          <option value="DF">DF</option><option value="ES">ES</option>
+          <option value="GO">GO</option><option value="MA">MA</option>
+          <option value="MT">MT</option><option value="MS">MS</option>
+          <option value="MG">MG</option><option value="PA">PA</option>
+          <option value="PB">PB</option><option value="PR">PR</option>
+          <option value="PE">PE</option><option value="PI">PI</option>
+          <option value="RJ">RJ</option><option value="RN">RN</option>
+          <option value="RS">RS</option><option value="RO">RO</option>
+          <option value="RR">RR</option><option value="SC">SC</option>
+          <option value="SP">SP</option><option value="SE">SE</option>
+          <option value="TO">TO</option>
+        </select>
+
+        <div class="check">
+          <input type="checkbox" id="aceite" required />
+          <span>
+            Confirmo que os dados informados são verdadeiros e aceito participar do Clube Nacional de Prêmios,
+            autorizando o uso dos meus dados para identificação, comunicação e participação nos sorteios.
+          </span>
+        </div>
+
+        <button type="submit">Finalizar cadastro</button>
+      </form>
+
+      <div id="mensagem" class="msg"></div>
+    </section>
+  </main>
+
+  <div class="footer">
+    Clube Nacional de Prêmios • Cadastro gratuito • Participação sujeita à validação operacional
+  </div>
+
 <script>
   const SUPABASE_URL = "https://frcolkudeiddfddccvmi.supabase.co";
   const SUPABASE_KEY = "sb_publishable_yu4G73-jorUbTivFrSM3Gg_t9UZt31G";
@@ -25,8 +275,12 @@
     }
 
     let resto = (soma * 10) % 11;
+
     if (resto === 10 || resto === 11) resto = 0;
-    if (resto !== parseInt(cpf.charAt(9))) return false;
+
+    if (resto !== parseInt(cpf.charAt(9))) {
+      return false;
+    }
 
     soma = 0;
 
@@ -35,6 +289,7 @@
     }
 
     resto = (soma * 10) % 11;
+
     if (resto === 10 || resto === 11) resto = 0;
 
     return resto === parseInt(cpf.charAt(10));
@@ -51,16 +306,20 @@
 
   document.getElementById("cpf").addEventListener("input", function(e) {
     let v = e.target.value.replace(/\D/g, "");
+
     v = v.replace(/(\d{3})(\d)/, "$1.$2");
     v = v.replace(/(\d{3})(\d)/, "$1.$2");
     v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
     e.target.value = v;
   });
 
   document.getElementById("whatsapp").addEventListener("input", function(e) {
     let v = e.target.value.replace(/\D/g, "");
+
     v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
     v = v.replace(/(\d{5})(\d{4})$/, "$1-$2");
+
     e.target.value = v;
   });
 
@@ -68,7 +327,10 @@
     e.preventDefault();
 
     if (!ref) {
-      mostrarMensagem("Link inválido. Solicite um novo link ao seu cambista.", false);
+      mostrarMensagem(
+        "Link inválido. Solicite um novo link ao seu cambista.",
+        false
+      );
       return;
     }
 
@@ -80,24 +342,33 @@
     const estado = document.getElementById("estado").value;
 
     if (!validarCPF(cpf)) {
-      mostrarMensagem("CPF inválido. Confira os dados e tente novamente.", false);
+      mostrarMensagem(
+        "CPF inválido. Confira os dados e tente novamente.",
+        false
+      );
       return;
     }
 
     if (!validarWhatsApp(whatsapp)) {
-      mostrarMensagem("WhatsApp inválido. Informe DDD + número completo.", false);
+      mostrarMensagem(
+        "WhatsApp inválido. Informe DDD + número completo.",
+        false
+      );
       return;
     }
 
     if (!validarEmail(email)) {
-      mostrarMensagem("E-mail inválido. Confira o endereço informado.", false);
+      mostrarMensagem(
+        "E-mail inválido. Confira o endereço informado.",
+        false
+      );
       return;
     }
 
     const pin = "CNP-" + Math.floor(100000 + Math.random() * 900000);
-    const tokenConfirmacao = crypto.randomUUID();
 
     try {
+
       const verificar = await fetch(
         `${SUPABASE_URL}/rest/v1/clientes?cpf=eq.${cpf}`,
         {
@@ -136,8 +407,7 @@
             pin,
             email_confirmado: false,
             whatsapp_confirmado: false,
-            status_cliente: "Pendente",
-            token_confirmacao: tokenConfirmacao
+            status_cliente: "Pendente"
           })
         }
       );
@@ -146,23 +416,10 @@
         throw new Error("Erro ao salvar");
       }
 
-      await fetch("/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email,
-          nome,
-          pin,
-          tokenConfirmacao
-        })
-      });
-
       mostrarMensagem(
         `Cadastro realizado com sucesso!<br><br>
         <strong>Seu número da sorte é: ${pin}</strong><br><br>
-        📩 Enviamos um e-mail para você confirmar sua participação.`,
+        ⚠️ Confira seu e-mail para validar sua participação.`,
         true
       );
 
