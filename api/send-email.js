@@ -12,7 +12,7 @@ export default async function handler(req, res) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer SUA_NOVA_API_KEY_RESEND"
+        Authorization: "Bearer re_BcUh84nC_44miQ7tgSnEc8WXwUSosabE8"
       },
       body: JSON.stringify({
         from: "Clube Nacional <cadastro@clubenacionaldepremios.com>",
