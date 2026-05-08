@@ -12,8 +12,8 @@ export default async function handler(req, res) {
       `https://frcolkudeiddfddccvmi.supabase.co/rest/v1/clientes?token_confirmacao=eq.${token}`,
       {
         headers: {
-          apikey: "SUA_PUBLISHABLE_KEY_SUPABASE",
-          Authorization: "Bearer SUA_PUBLISHABLE_KEY_SUPABASE"
+          apikey: "sb_publishable_yu4G73-jorUbTivFrSM3Gg_t9UZt31G",
+          Authorization: "Bearer sb_publishable_yu4G73-jorUbTivFrSM3Gg_t9UZt31G"
         }
       }
     );
