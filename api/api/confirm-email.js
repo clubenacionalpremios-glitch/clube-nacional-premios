@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         headers: {
           "Content-Type": "application/json",
           apikey: "SUA_PUBLISHABLE_KEY_SUPABASE",
-          Authorization: "Bearer SUA_PUBLISHABLE_KEY_SUPABASE"
+          Authorization: "Bearer sb_publishable_yu4G73-jorUbTivFrSM3Gg_t9UZt31G"
         },
         body: JSON.stringify({
           email_confirmado: true
