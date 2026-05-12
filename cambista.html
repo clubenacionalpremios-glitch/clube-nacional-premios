@@ -1,1 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Cambista</title>
 
+  <style>
+
+    *{
+      box-sizing:border-box;
+    }
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:#111;
+      color:white;
+    }
+
+    .container{
+      max-width:700px;
+      margin:50px auto;
+      padding:20px;
+    }
+
+    .card{
+      background:#1b1b1b;
+      border-radius:20px;
+      padding:35px;
+      border:1px solid rgba(255,255,255,0.05);
+    }
+
+    .logo{
+      width:170px;
+      display:block;
+      margin:0 auto 20px;
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:10px;
+    }
+
+    .sub{
+      text-align:center;
+      color:#bbb;
+      margin-bottom:35px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:8px;
+      margin-top:18px;
+      font-weight:bold;
+    }
+
+    input,
+    select{
+      width:100%;
+      padding:14px;
+      border-radius:12px;
+      border:none;
+      font-size:15px;
+    }
+
+    button{
+      width:100%;
+      margin-top:28px;
+      padding:16px;
+      border:none;
+      border-radius:14px;
+      background:#ffd23f;
+      color:#111;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .resultado{
+      margin-top:30px;
+      padding:20px;
+      border-radius:14px;
+      background:#252525;
+      display:none;
+    }
+
+    .link{
+      margin-top:15px;
+      word-break:break-all;
+      background:#111;
+      padding:15px;
+      border-radius:12px;
+      font-size:14px;
+    }
+
+    .copiar{
+      margin-top:15px;
+      background:#25D366;
+      color:white;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="card">
+
+      <img src="/logo.png" class="logo">
+
+      <h1>Cadastro de Cambista</h1>
+
+      <div class="sub">
+        Gere seu link exclusivo de divulgação
+      </div>
+
+      <form id="formCambista">
+
+        <label>Nome completo</label>
+        <input type="text" id="nome" required>
+
+        <label>WhatsApp</label>
+        <input type="text" id="telefone" required>
+
+        <label>E-mail</label>
+        <input type="email" id="email" required>
+
+        <label>Empresa</label>
+
+        <select id="empresa" required>
+
+          <option value="">Selecione</option>
+
+          <option value="RecPix">RecPix</option>
+
+          <option value="Nacional">Nacional</option>
+
+          <option value="Zuum">Zuum</option>
+
+          <option value="PixDaSorte">PixDaSorte</option>
+
+          <option value="SorteJa">SorteJa</option>
+
+        </select>
+
+        <button type="submit">
+          Gerar meu link
+        </button>
+
+      </form>
+
+      <div class="resultado" id="resultado">
+
+        <strong>Seu link foi gerado com sucesso 🚀</strong>
+
+        <div class="link" id="linkGerado"></div>
+
+        <button class="copiar" onclick="copiarLink()">
+          Copiar link
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+<script>
+
+const SUPABASE_URL = "https://frcolkudeiddfddccvmi.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_yu4G73-jorUbTivFrSM3Gg_t9UZt31G";
+
+const form = document.getElementById("formCambista");
+
+let linkFinal = "";
+
+form.addEventListener("submit", async function(e){
+
+  e.preventDefault();
+
+  const nome = document.getElementById("nome").value.trim();
+
+  const telefone = document.getElementById("telefone").value.trim();
+
+  const email = document.getElementById("email").value.trim();
+
+  const empresa = document.getElementById("empresa").value;
+
+  const codigo =
+    nome.toLowerCase()
+    .replace(/\s+/g,"-")
+    .replace(/[^\w-]+/g,"")
+    + "-"
+    + Math.floor(1000 + Math.random() * 9000);
+
+  linkFinal =
+    "https://clubenacionaldepremios.com/?ref=" + codigo;
+
+  try{
+
+    const resposta = await fetch(
+      `${SUPABASE_URL}/rest/v1/cambistas`,
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":"application/json",
+          apikey:SUPABASE_KEY,
+          Authorization:`Bearer ${SUPABASE_KEY}`,
+          Prefer:"return=minimal"
+        },
+
+        body:JSON.stringify({
+          nome,
+          telefone,
+          email,
+          empresa,
+          codigo,
+          status:"Ativo"
+        })
+      }
+    );
+
+    if(!resposta.ok){
+      throw new Error("Erro ao salvar");
+    }
+
+    document.getElementById("resultado").style.display = "block";
+
+    document.getElementById("linkGerado").innerText =
+      linkFinal;
+
+    form.reset();
+
+  }catch(erro){
+
+    alert("Erro ao gerar link.");
+
+    console.error(erro);
+
+  }
+
+});
+
+function copiarLink(){
+
+  navigator.clipboard.writeText(linkFinal);
+
+  alert("Link copiado!");
+
+}
+
+</script>
+
+</body>
+</html>
